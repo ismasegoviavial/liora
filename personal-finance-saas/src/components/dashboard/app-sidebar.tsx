@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { LayoutDashboard, Receipt, PiggyBank, CreditCard, LineChart, MessageSquare, Landmark, Settings, Sparkles, MapPin } from "lucide-react"
+import { LayoutDashboard, Receipt, PiggyBank, CreditCard, LineChart, MessageSquare, Landmark, Settings, Sparkles, MapPin, TrendingUp, Building2 } from "lucide-react"
 import Link from "next/link"
 
 const items = [
@@ -18,7 +18,9 @@ const items = [
   { title: "Metas de Ahorro", url: "/goals", icon: Landmark },
   { title: "Deudas", url: "/debts", icon: CreditCard },
   { title: "Patrimonio", url: "/net-worth", icon: LineChart },
+  { title: "Inversiones (ETFs)", url: "/investments", icon: TrendingUp },
   { title: "Promociones", url: "/deals", icon: MapPin },
+  { title: "Panel Anunciantes B2B", url: "/b2b-admin", icon: Building2 },
   { title: "Asesor IA", url: "/advisor", icon: MessageSquare, isPremium: true },
   { title: "Cuentas Bancarias", url: "/accounts", icon: Landmark },
   { title: "Configuración", url: "/settings", icon: Settings },
