@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import prisma from "@/lib/prisma"
 import { NewGoalDialog } from "@/components/goals/NewGoalDialog"
+import { Button } from "@/components/ui/button"
 
 export default async function GoalsPage() {
   const goals = await prisma.savingsGoal.findMany({

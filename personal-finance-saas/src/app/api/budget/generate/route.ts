@@ -39,7 +39,7 @@ Tu objetivo es reducir los gastos no esenciales en un 15-25% para aumentar su ca
 Gastos actuales por categoría (CLP):
 ${JSON.stringify(categoryTotals, null, 2)}
 
-Responde estrictamente en formato JSON válido con la siguiente estructura (sin markdown adicional, sin bloques de código ```json):
+Responde estrictamente en formato JSON válido con la siguiente estructura (sin markdown adicional, sin bloques de código \`\`\`json):
 {
   "estimatedSavings": 120000,
   "budgets": [
