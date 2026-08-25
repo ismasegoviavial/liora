@@ -43,8 +43,8 @@ export default function Home() {
             <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-foreground mb-8 leading-tight">
               Control absoluto de tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">dinero</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-              Conecta tus bancos, deja que la IA analice tus gastos, y recibe ofertas hiper-localizadas en tiempo real.
+            <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+              Máximo <strong className="text-foreground">ahorro monetario y de tiempo</strong>. Conecta tus bancos en segundos, deja que la IA organice tus finanzas en piloto automático y recibe beneficios geolocalizados en tiempo real.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/dashboard">
