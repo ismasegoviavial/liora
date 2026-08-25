@@ -1,0 +1,227 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// Better Auth required models
+// ==========================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  
+  // Custom fields for SaaS
+  currency      String    @default("CLP")
+  isPremium     Boolean   @default(false)
+
+  // Better Auth Relations
+  sessions      Session[]
+  accounts      Account[]
+
+  // SaaS Relations
+  bankAccounts  BankAccount[]
+  transactions  Transaction[]
+  budgets       BudgetItem[]
+  savingsGoals  SavingsGoal[]
+  debts         Debt[]
+  netWorthSnaps NetWorthSnap[]
+  categories    Category[]
+  chatMessages  ChatMessage[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+}
+
+// ==========================================
+// SaaS Business Logic Models
+// ==========================================
+
+model BankAccount {
+  id              String        @id @default(cuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Fintoc fields
+  fintocLinkId    String?       @unique
+  fintocAccountId String?       @unique
+  institutionName String?       // e.g. "Banco de Chile"
+  accountName     String        // e.g. "Cuenta corriente"
+  accountType     String?       // "checking", "credit_card"
+  lastSync        DateTime?
+
+  transactions    Transaction[]
+  createdAt       DateTime      @default(now())
+}
+
+model Transaction {
+  id                String       @id @default(cuid())
+  userId            String
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId         String?
+  account           BankAccount? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+
+  date              DateTime
+  type              String       // "income" | "expense"
+  categoryId        String?
+  category          Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  description       String
+  
+  amount            Float // In base currency (CLP)
+  originalAmount    Float?
+  originalCurrency  String?      // "USD", "EUR", etc.
+  exchangeRate      Float?
+  
+  paymentMethod     String?      // "cash", "debit_card", "credit_card", "transfer"
+
+  // Fintoc tracking
+  fintocMovementId  String?      @unique
+  source            String       @default("manual") // "manual" | "fintoc"
+
+  // Geolocalización
+  latitude          Float?
+  longitude         Float?
+
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([userId, date])
+  @@index([userId, type])
+}
+
+model Category {
+  id           String        @id @default(cuid())
+  userId       String?
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String        
+  type         String        // "income" | "expense"
+  icon         String?       
+  isDefault    Boolean       @default(false)
+
+  transactions Transaction[]
+  budgetItems  BudgetItem[]
+
+  @@unique([userId, name, type])
+}
+
+model BudgetItem {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId   String
+  category     Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  month        DateTime  // e.g. 2026-08-01
+  budgetAmount Float
+
+  @@unique([userId, categoryId, month])
+}
+
+model SavingsGoal {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String   
+  targetAmount  Float
+  currentAmount Float  @default(0) 
+  startDate     DateTime
+  targetDate    DateTime
+  status        String   @default("in_progress") 
+  createdAt     DateTime @default(now())
+}
+
+model Debt {
+  id             String  @id @default(cuid())
+  userId         String
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String  
+  currentBalance Float
+  annualRate     Float
+  monthlyPayment Float
+  priority       String  @default("medium") 
+  createdAt      DateTime @default(now())
+}
+
+model NetWorthSnap {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  month          DateTime 
+  cashAccounts   Float  @default(0) 
+  investments    Float  @default(0) 
+  property       Float  @default(0) 
+  otherAssets    Float  @default(0) 
+  totalDebts     Float  @default(0) 
+
+  @@unique([userId, month])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String   // "user" | "assistant"
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model SponsoredDeal {
+  id           String   @id @default(cuid())
+  companyName  String
+  message      String
+  latitude     Float
+  longitude    Float
+  radiusMeters Int
+  category     String   // Used to match user preferences (e.g. 'Ropa', 'Comida')
+  tier         String   // 'basic', 'premium', 'enterprise'
+  expiresAt    DateTime
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
