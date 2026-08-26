@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Wallet, PiggyBank, Bot, Target, FileText, Building2, User } from "lucide-react"
+import { LayoutDashboard, Wallet, PiggyBank, Bot, Target, FileText } from "lucide-react"
 
 export function B2bSidebar() {
   const pathname = usePathname()
@@ -53,13 +53,9 @@ export function B2bSidebar() {
         </nav>
       </div>
 
-      {/* Switch Mode Footer */}
-      <div className="pt-4 border-t border-slate-800">
-        <Link href="/dashboard">
-          <button className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2.5 px-3 rounded-xl text-xs font-bold transition-all border border-slate-700">
-            <User className="w-4 h-4 text-emerald-400" /> Ir a Modo Personas
-          </button>
-        </Link>
+      {/* Footer info without cross-system link */}
+      <div className="pt-4 border-t border-slate-800 text-[11px] text-slate-500 text-center">
+        FinanzasPro Corporate Suite v2.4
       </div>
     </aside>
   )
