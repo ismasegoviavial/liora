@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { OverviewChart } from "@/components/dashboard/OverviewChart" // Reusing bar chart temporarily or we can make a line chart
+import { OverviewChart } from "@/components/dashboard/OverviewChart" 
+
+export const dynamic = "force-dynamic"
 
 export default async function NetWorthPage() {
   const assets = 18500000

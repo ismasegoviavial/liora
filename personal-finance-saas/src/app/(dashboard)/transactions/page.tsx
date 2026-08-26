@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/table"
 import prisma from "@/lib/prisma"
 
+export const dynamic = "force-dynamic"
+
 export default async function TransactionsPage() {
   // En el futuro filtar por el usuario logueado
   const transactions = await prisma.transaction.findMany({

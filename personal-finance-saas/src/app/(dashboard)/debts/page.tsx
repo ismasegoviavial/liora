@@ -1,6 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import prisma from "@/lib/prisma"
 import { NewDebtDialog } from "@/components/debts/NewDebtDialog"
+import { Button } from "@/components/ui/button"
+
+export const dynamic = "force-dynamic"
 
 export default async function DebtsPage() {
   const debts = await prisma.debt.findMany({
