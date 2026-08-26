@@ -5,10 +5,12 @@ import { Input } from "@/components/ui/input"
 import { Building2, Eye, MapPin, Plus, TrendingUp, Zap, FileText, DollarSign, Wallet, ArrowUpRight, ArrowDownRight, Target, Users, Calendar } from "lucide-react"
 import Link from "next/link"
 import { CreateDealDialog } from "@/components/b2b/CreateDealDialog"
+import { ensureInitialSeed } from "@/lib/seed"
 
 export const dynamic = "force-dynamic"
 
 export default async function B2bDashboardPage() {
+  await ensureInitialSeed()
   const deals = await prisma.sponsoredDeal.findMany({
     orderBy: { createdAt: "desc" }
   })
