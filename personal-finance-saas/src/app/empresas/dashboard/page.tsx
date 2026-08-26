@@ -39,6 +39,7 @@ export default async function B2bDashboardPage() {
     { name: "Runway Operativo", formula: "Caja Disponible / Burn Rate Mensual", assumption: "Si es < 6 meses, activa Alerta Roja de liquidez." },
     { name: "Burn Rate Neto", formula: "OPEX Mensual - Ingresos Recurrentes", assumption: "Mide la velocidad de consumo de caja libre." },
     { name: "DSO (Días de Cobro)", formula: "(Cuentas por Cobrar / Ventas Brutas) x 30 días", assumption: "Valores > 30 días requieren cobranza automatizada." },
+    { name: "Tiempo Optimizado", formula: "HH Conciliación + Cotización + Cobranza - Automático", assumption: "Suma 18 hrs/mes ahorradas en tareas administrativas manuales." },
     { name: "Detección Ahorro IA", formula: "Gasto Actual x (1 - Percentil 25 Mercado)", assumption: "Compara proveedores contra precios base del mercado chileno." },
   ]
 
