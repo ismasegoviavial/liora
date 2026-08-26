@@ -45,7 +45,7 @@ export default async function B2bDashboardPage() {
               🏢
             </div>
             <div>
-              <span className="font-extrabold text-lg text-white tracking-tight">FinanzasPro <span className="text-emerald-400 font-normal">Empresas ERP</span></span>
+              <span className="font-extrabold text-lg text-white tracking-tight">FinanzasPro <span className="text-emerald-400 font-normal">Empresas</span></span>
               <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full ml-2 uppercase">Contabilidad & Analytics</span>
             </div>
           </div>
