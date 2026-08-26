@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { PiggyBank, TrendingUp, Sparkles, Zap, ArrowUpRight, ArrowDownRight, Target, DollarSign, Wallet, RefreshCw, BarChart2, ExternalLink, ShieldCheck, PieChart, AlertTriangle, Clock, Calendar, CheckCircle2, Building2 } from "lucide-react"
+import { PiggyBank, TrendingUp, Sparkles, Zap, ArrowUpRight, ArrowDownRight, Target, DollarSign, Wallet, RefreshCw, BarChart2, ExternalLink, ShieldCheck, PieChart, AlertTriangle, Clock, Calendar, CheckCircle2, Calculator, Info, FileSpreadsheet, Activity } from "lucide-react"
 import Link from "next/link"
 import { CreateDealDialog } from "@/components/b2b/CreateDealDialog"
 import { ensureInitialSeed } from "@/lib/seed"
@@ -14,14 +14,17 @@ export default async function B2bDashboardPage() {
     orderBy: { createdAt: "desc" }
   })
 
-  // Management Control KPIs (Control de Gestión)
-  const managementKpis = {
+  // Complete Financial Management Control Indicators (KPIs de Control de Gestión Financiero)
+  const financialManagementKpis = {
     currentCash: 18450000,
     monthlyBurnRate: 4200000,
     runwayMonths: 4.4,
+    dsoDays: 18, // Days Sales Outstanding (Días de Cobro Promedio)
+    ebitdaMarginPercent: 24.2, // Margen Operativo EBITDA
+    liquidityRatio: 2.1, // Ratio de Liquidez (Activo / Pasivo)
+    workingCapital: 12200000, // Capital de Trabajo Neto
+    breakEvenSales: 5200000, // Punto de Equilibrio Mensual
     overdueInvoicesAmount: 1450000,
-    timeSavedHours: 18,
-    totalSavedThisMonth: 1850000,
   }
 
   // 90-Day Cash Flow Projection
@@ -31,11 +34,12 @@ export default async function B2bDashboardPage() {
     { month: "Octubre (Proyectado)", incoming: 16500000, outgoing: 11500000, netCash: 27350000 },
   ]
 
-  // AI Management Alerts
-  const aiAlerts = [
-    { id: 1, type: "danger", title: "Factura Vencida Pendiente de Cobro", desc: "Haka Honu SpA registra $1.450.000 CLP con 12 días de mora.", action: "Enviar Recordatorio de Cobro" },
-    { id: 2, type: "warning", title: "Desvío en Presupuesto de Marketing", desc: "El gasto publicitario superó en $180.000 CLP la meta estimada del mes.", action: "Ajustar Límite" },
-    { id: 3, type: "success", title: "Oportunidad de Ahorro en Telecomunicaciones", desc: "Detectamos un sobreprecio del 24% en tu plan de internet corporativo.", action: "Ver Oferta Optimizada" },
+  // AI Optimization Assumptions & Formulas
+  const aiFormulas = [
+    { name: "Runway Operativo", formula: "Caja Disponible / Burn Rate Mensual", assumption: "Si es < 6 meses, activa Alerta Roja de liquidez." },
+    { name: "Burn Rate Neto", formula: "OPEX Mensual - Ingresos Recurrentes", assumption: "Mide la velocidad de consumo de caja libre." },
+    { name: "DSO (Días de Cobro)", formula: "(Cuentas por Cobrar / Ventas Brutas) x 30 días", assumption: "Valores > 30 días requieren cobranza automatizada." },
+    { name: "Detección Ahorro IA", formula: "Gasto Actual x (1 - Percentil 25 Mercado)", assumption: "Compara proveedores contra precios base del mercado chileno." },
   ]
 
   return (
@@ -49,7 +53,7 @@ export default async function B2bDashboardPage() {
             </div>
             <div>
               <span className="font-extrabold text-lg text-white tracking-tight">FinanzasPro <span className="text-emerald-400 font-normal">Empresas</span></span>
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full ml-2 uppercase">Control de Gestión</span>
+              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full ml-2 uppercase">Control de Gestión Financiero</span>
             </div>
           </div>
 
@@ -73,8 +77,8 @@ export default async function B2bDashboardPage() {
         {/* Top Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Cuadro de Mando & Control de Gestión</h1>
-            <p className="text-slate-500 text-sm mt-1">Monitorea el flujo de caja proyectado, Burn Rate, salud financiera y dashboards integrados.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Cuadro de Mando & Control de Gestión Financiero</h1>
+            <p className="text-slate-500 text-sm mt-1">Indicadores clave de liquidez, Burn Rate, Runway, DSO y supuestos de optimización por IA.</p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -82,18 +86,16 @@ export default async function B2bDashboardPage() {
           </div>
         </div>
 
-        {/* Management Control KPI Grid */}
+        {/* 8 Complete Financial Management Control KPIs */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="border border-slate-200 shadow-sm bg-white">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Caja Disponible Real</span>
-                <Wallet className="w-5 h-5 text-emerald-600" />
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Runway Operativo</span>
+                <Clock className="w-5 h-5 text-blue-600" />
               </div>
-              <h3 className="text-2xl font-black text-slate-900 mt-2">${managementKpis.currentCash.toLocaleString("es-CL")}</h3>
-              <p className="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1">
-                <ArrowUpRight className="w-3.5 h-3.5" /> Saldo disponible en bancos
-              </p>
+              <h3 className="text-2xl font-black text-blue-600 mt-2">{financialManagementKpis.runwayMonths} meses</h3>
+              <p className="text-xs text-slate-500 mt-1">Meses de vida con la caja actual</p>
             </CardContent>
           </Card>
 
@@ -103,19 +105,63 @@ export default async function B2bDashboardPage() {
                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Burn Rate Mensual</span>
                 <ArrowDownRight className="w-5 h-5 text-red-500" />
               </div>
-              <h3 className="text-2xl font-black text-red-600 mt-2">${managementKpis.monthlyBurnRate.toLocaleString("es-CL")}</h3>
-              <p className="text-xs text-slate-500 mt-1">Gasto operativo neto mensual</p>
+              <h3 className="text-2xl font-black text-red-600 mt-2">${financialManagementKpis.monthlyBurnRate.toLocaleString("es-CL")}</h3>
+              <p className="text-xs text-slate-500 mt-1">Consumo mensual de caja libre</p>
             </CardContent>
           </Card>
 
           <Card className="border border-slate-200 shadow-sm bg-white">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Runway Operativo</span>
-                <Clock className="w-5 h-5 text-blue-600" />
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">DSO (Días de Cobro)</span>
+                <Activity className="w-5 h-5 text-purple-600" />
               </div>
-              <h3 className="text-2xl font-black text-blue-600 mt-2">{managementKpis.runwayMonths} meses</h3>
-              <p className="text-xs text-blue-600 font-semibold mt-1">Meses de vida con la caja actual</p>
+              <h3 className="text-2xl font-black text-slate-900 mt-2">{financialManagementKpis.dsoDays} días</h3>
+              <p className="text-xs text-emerald-600 font-semibold mt-1">Cobranza rápida y eficiente</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-200 shadow-sm bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Margen EBITDA</span>
+                <TrendingUp className="w-5 h-5 text-emerald-600" />
+              </div>
+              <h3 className="text-2xl font-black text-emerald-600 mt-2">{financialManagementKpis.ebitdaMarginPercent}%</h3>
+              <p className="text-xs text-slate-500 mt-1">Margen operativo sobre ventas</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-200 shadow-sm bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Ratio Liquidez</span>
+                <ShieldCheck className="w-5 h-5 text-emerald-600" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mt-2">{financialManagementKpis.liquidityRatio}x</h3>
+              <p className="text-xs text-slate-500 mt-1">Activo Corriente / Pasivo Corriente</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-200 shadow-sm bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Capital de Trabajo</span>
+                <Wallet className="w-5 h-5 text-emerald-600" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mt-2">${financialManagementKpis.workingCapital.toLocaleString("es-CL")}</h3>
+              <p className="text-xs text-slate-500 mt-1">Fondo de maniobra neto</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-200 shadow-sm bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Punto de Equilibrio</span>
+                <BarChart2 className="w-5 h-5 text-amber-600" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mt-2">${financialManagementKpis.breakEvenSales.toLocaleString("es-CL")}</h3>
+              <p className="text-xs text-slate-500 mt-1">Ventas mínimas para no perder</p>
             </CardContent>
           </Card>
 
@@ -123,13 +169,40 @@ export default async function B2bDashboardPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Cobranza Vencida</span>
-                <AlertTriangle className="w-5 h-5 text-amber-600" />
+                <AlertTriangle className="w-5 h-5 text-red-500" />
               </div>
-              <h3 className="text-2xl font-black text-amber-600 mt-2">${managementKpis.overdueInvoicesAmount.toLocaleString("es-CL")}</h3>
-              <p className="text-xs text-slate-500 mt-1">Facturas sin cobrar con mora</p>
+              <h3 className="text-2xl font-black text-red-600 mt-2">${financialManagementKpis.overdueInvoicesAmount.toLocaleString("es-CL")}</h3>
+              <p className="text-xs text-red-600 font-semibold mt-1">1 factura con mora</p>
             </CardContent>
           </Card>
         </div>
+
+        {/* AI Optimization Assumptions & Formulas Card */}
+        <Card className="border border-slate-200 shadow-sm bg-white">
+          <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100 pb-4">
+            <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Calculator className="w-5 h-5 text-emerald-600" /> Fórmulas y Supuestos del Motor de Optimización con IA
+            </CardTitle>
+            <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full">
+              Algoritmo Gemini Pro
+            </span>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {aiFormulas.map((item, idx) => (
+                <div key={idx} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-extrabold text-slate-900 text-sm">{item.name}</span>
+                    <span className="text-[10px] font-mono bg-slate-200 text-slate-800 px-2 py-0.5 rounded font-bold">{item.formula}</span>
+                  </div>
+                  <p className="text-xs text-slate-600">
+                    <strong className="text-slate-800">Supuesto IA:</strong> {item.assumption}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* 90-Day Cash Flow Projection Card */}
         <Card className="border border-slate-200 shadow-sm bg-white">
@@ -137,9 +210,6 @@ export default async function B2bDashboardPage() {
             <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-emerald-600" /> Proyección de Flujo de Caja a 90 Días (Cash Flow)
             </CardTitle>
-            <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full">
-              Modelo Predictivo Activo
-            </span>
           </CardHeader>
           <CardContent className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -164,45 +234,6 @@ export default async function B2bDashboardPage() {
                     <span className="text-xs font-bold text-slate-500">Saldo Final de Caja</span>
                     <span className="text-base font-black text-slate-900">${item.netCash.toLocaleString("es-CL")}</span>
                   </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* AI Management Alerts Engine */}
-        <Card className="border border-slate-200 shadow-sm bg-white">
-          <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100 pb-4">
-            <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-purple-600" /> Alertas Automáticas de Control de Gestión (IA Gemini)
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="space-y-3">
-              {aiAlerts.map((alert) => (
-                <div 
-                  key={alert.id}
-                  className={`p-4 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-3 ${
-                    alert.type === 'danger' ? 'bg-red-50/60 border-red-200 text-red-900' :
-                    alert.type === 'warning' ? 'bg-amber-50/60 border-amber-200 text-amber-900' :
-                    'bg-emerald-50/60 border-emerald-200 text-emerald-900'
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-full shrink-0 mt-0.5">
-                      {alert.type === 'danger' && <AlertTriangle className="w-5 h-5 text-red-600" />}
-                      {alert.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600" />}
-                      {alert.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
-                    </div>
-                    <div>
-                      <div className="font-bold text-sm">{alert.title}</div>
-                      <p className="text-xs opacity-90 mt-0.5">{alert.desc}</p>
-                    </div>
-                  </div>
-
-                  <Button size="sm" variant="outline" className="rounded-full font-bold text-xs shrink-0 border-current bg-white">
-                    {alert.action}
-                  </Button>
                 </div>
               ))}
             </div>
