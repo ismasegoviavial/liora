@@ -100,12 +100,12 @@ export default async function B2bDashboardPage() {
           <Card className="border-2 border-emerald-500/30 shadow-md bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-3xl relative overflow-hidden">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">Personas Enviadas a tus Tiendas</span>
+                <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">Cupones Canjeados en Caja (100% Real)</span>
                 <Users className="w-6 h-6 text-emerald-400" />
               </div>
-              <h3 className="text-4xl font-black text-white mt-3">{trafficMetrics.totalPhysicalVisits.toLocaleString("es-CL")} clientes</h3>
+              <h3 className="text-4xl font-black text-white mt-3">{trafficMetrics.totalPhysicalVisits.toLocaleString("es-CL")} canjes</h3>
               <p className="text-xs text-emerald-300 font-semibold mt-2 flex items-center gap-1">
-                <Navigation className="w-3.5 h-3.5" /> Personas que llegaron presencialmente por la app
+                <Navigation className="w-3.5 h-3.5" /> Atribución 100% exacta validada en caja registradora
               </p>
             </CardContent>
           </Card>
