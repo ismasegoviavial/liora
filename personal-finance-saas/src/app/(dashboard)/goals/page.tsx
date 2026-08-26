@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma"
 import { NewGoalDialog } from "@/components/goals/NewGoalDialog"
 import { Button } from "@/components/ui/button"
 
+export const dynamic = "force-dynamic"
+
 export default async function GoalsPage() {
   const goals = await prisma.savingsGoal.findMany({
     where: { userId: "dummy-user-123" },

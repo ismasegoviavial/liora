@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma"
 import MapWrapper from "@/components/dashboard/MapWrapper"
 import { Info } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 export default async function DealsPage() {
   // Fetch active deals
   const now = new Date()

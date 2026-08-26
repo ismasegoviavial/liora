@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Building2, Eye, MapPin, Plus, TrendingUp, Zap, FileText, DollarSign, Wallet, ArrowUpRight, ArrowDownRight } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 export default async function B2bAdminPage() {
   const deals = await prisma.sponsoredDeal.findMany({
     orderBy: { createdAt: "desc" }
