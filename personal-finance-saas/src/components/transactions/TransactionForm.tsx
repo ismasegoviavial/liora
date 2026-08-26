@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { createTransaction } from "@/app/actions/transactions"
-import { MapPin } from "lucide-react"
+import { MapPin, Plus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -18,11 +18,26 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+const DEFAULT_CATEGORIES = [
+  "Supermercado",
+  "Vivienda y Servicios",
+  "Transporte",
+  "Salud y Farmacia",
+  "Entretenimiento",
+  "Educación",
+  "Restaurantes y Cafés",
+  "Inversiones",
+  "Vestuario y Calzado",
+  "Mascotas",
+  "Otros"
+]
+
 const transactionSchema = z.object({
   type: z.enum(["income", "expense"]),
   amount: z.coerce.number().positive("El monto debe ser mayor a 0"),
   originalCurrency: z.string().default("CLP"),
   description: z.string().min(2, "Descripción muy corta"),
+  category: z.string().min(1, "Selecciona o ingresa una categoría"),
   date: z.string(),
   paymentMethod: z.string(),
 })
@@ -31,6 +46,7 @@ export function TransactionForm({ onSuccess }: { onSuccess?: () => void }) {
   const [loading, setLoading] = useState(false)
   const [location, setLocation] = useState<{lat: number, lng: number} | null>(null)
   const [locating, setLocating] = useState(false)
+  const [customCategory, setCustomCategory] = useState(false)
 
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
@@ -39,6 +55,7 @@ export function TransactionForm({ onSuccess }: { onSuccess?: () => void }) {
       amount: 0,
       originalCurrency: "CLP",
       description: "",
+      category: "Supermercado",
       date: new Date().toISOString().split("T")[0],
       paymentMethod: "debit_card",
     },
@@ -112,8 +129,42 @@ export function TransactionForm({ onSuccess }: { onSuccess?: () => void }) {
       </div>
 
       <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <Label>Categoría</Label>
+          <button 
+            type="button" 
+            onClick={() => setCustomCategory(!customCategory)} 
+            className="text-xs text-blue-600 font-semibold hover:underline flex items-center gap-1"
+          >
+            <Plus className="w-3 h-3" /> {customCategory ? "Seleccionar de la lista" : "Crear nueva categoría"}
+          </button>
+        </div>
+
+        {customCategory ? (
+          <Input 
+            placeholder="Escribe el nombre de tu nueva categoría" 
+            onChange={(e) => form.setValue("category", e.target.value)}
+          />
+        ) : (
+          <Select 
+            onValueChange={(val) => form.setValue("category", val)} 
+            defaultValue={form.getValues("category")}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecciona una categoría" />
+            </SelectTrigger>
+            <SelectContent>
+              {DEFAULT_CATEGORIES.map((cat) => (
+                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+      </div>
+
+      <div className="space-y-2">
         <Label>Descripción</Label>
-        <Input placeholder="Ej. Supermercado, Netflix..." {...form.register("description")} />
+        <Input placeholder="Ej. Lider, Netflix, Copec..." {...form.register("description")} />
         {form.formState.errors.description && (
           <p className="text-sm text-red-500">{form.formState.errors.description.message}</p>
         )}
@@ -159,7 +210,7 @@ export function TransactionForm({ onSuccess }: { onSuccess?: () => void }) {
         </div>
       </div>
 
-      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={loading}>
+      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 font-bold" disabled={loading}>
         {loading ? "Guardando..." : "Guardar Transacción"}
       </Button>
     </form>
