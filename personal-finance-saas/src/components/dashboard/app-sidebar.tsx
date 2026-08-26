@@ -20,7 +20,6 @@ const items = [
   { title: "Patrimonio", url: "/net-worth", icon: LineChart },
   { title: "Inversiones (ETFs)", url: "/investments", icon: TrendingUp },
   { title: "Promociones", url: "/deals", icon: MapPin },
-  { title: "Panel Anunciantes B2B", url: "/b2b-admin", icon: Building2 },
   { title: "Asesor IA", url: "/advisor", icon: MessageSquare, isPremium: true },
   { title: "Cuentas Bancarias", url: "/accounts", icon: Landmark },
   { title: "Configuración", url: "/settings", icon: Settings },

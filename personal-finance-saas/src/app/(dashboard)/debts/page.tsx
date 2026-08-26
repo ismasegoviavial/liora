@@ -2,10 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import prisma from "@/lib/prisma"
 import { NewDebtDialog } from "@/components/debts/NewDebtDialog"
 import { Button } from "@/components/ui/button"
+import { ensureInitialSeed } from "@/lib/seed"
 
 export const dynamic = "force-dynamic"
 
 export default async function DebtsPage() {
+  await ensureInitialSeed()
   const debts = await prisma.debt.findMany({
     where: { userId: "dummy-user-123" },
     orderBy: { currentBalance: "desc" }

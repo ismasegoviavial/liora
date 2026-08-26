@@ -1,10 +1,12 @@
 import prisma from "@/lib/prisma"
 import MapWrapper from "@/components/dashboard/MapWrapper"
 import { Info } from "lucide-react"
+import { ensureInitialSeed } from "@/lib/seed"
 
 export const dynamic = "force-dynamic"
 
 export default async function DealsPage() {
+  await ensureInitialSeed()
   // Fetch active deals
   const now = new Date()
   const deals = await prisma.sponsoredDeal.findMany({
