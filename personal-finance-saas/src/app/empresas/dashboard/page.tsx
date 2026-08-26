@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { PiggyBank, TrendingUp, Sparkles, Zap, ShieldCheck, ArrowUpRight, Target, DollarSign, Wallet, RefreshCw, AlertCircle, Building2 } from "lucide-react"
+import { PiggyBank, TrendingUp, Sparkles, Zap, ArrowUpRight, Target, DollarSign, Wallet, RefreshCw, BarChart2, ExternalLink, ShieldCheck, PieChart } from "lucide-react"
 import Link from "next/link"
 import { CreateDealDialog } from "@/components/b2b/CreateDealDialog"
 import { ensureInitialSeed } from "@/lib/seed"
@@ -14,7 +14,7 @@ export default async function B2bDashboardPage() {
     orderBy: { createdAt: "desc" }
   })
 
-  // Corporate Savings Analysis
+  // Corporate Savings Metrics
   const corporateSavings = {
     totalSavedThisMonth: 1850000,
     annualProjectedSavings: 22200000,
@@ -27,6 +27,9 @@ export default async function B2bDashboardPage() {
       { category: "Comisiones Bancarias & POS", currentCost: 480000, optimizedCost: 240000, monthlySaving: 240000, status: "Optimizado con IA" },
     ]
   }
+
+  // Sample embed URL for Looker Studio / Power BI
+  const embeddedDashboardUrl = "https://lookerstudio.google.com/embed/reporting/0B1a2b3c4d5e/page/1M"
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -63,8 +66,8 @@ export default async function B2bDashboardPage() {
         {/* Top Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Panel de Ahorro Empresarial & Tiempo</h1>
-            <p className="text-slate-500 text-sm mt-1">Maximiza el ahorro operativo de tu empresa y optimiza el tiempo de gestión en piloto automático.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Panel de Ahorro Empresarial & BI</h1>
+            <p className="text-slate-500 text-sm mt-1">Visualiza los indicadores de ahorro corporativo integrados directamente con Power BI / Looker Studio.</p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -90,25 +93,78 @@ export default async function B2bDashboardPage() {
           <Card className="border border-slate-200 shadow-sm bg-white">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tiempo Optimizado (Este Mes)</span>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tiempo Optimizado</span>
                 <Zap className="w-5 h-5 text-amber-500" />
               </div>
               <h3 className="text-3xl font-extrabold text-slate-900 mt-2">{corporateSavings.timeSavedHours} horas</h3>
-              <p className="text-xs text-slate-500 mt-1">En conciliación y búsqueda de proveedores</p>
+              <p className="text-xs text-slate-500 mt-1">Ahorradas en gestión de proveedores</p>
             </CardContent>
           </Card>
 
           <Card className="border border-slate-200 shadow-sm bg-white">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Potencial de Ahorro Adicional</span>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Potencial de Ahorro IA</span>
                 <Sparkles className="w-5 h-5 text-accent" />
               </div>
               <h3 className="text-3xl font-extrabold text-emerald-600 mt-2">${corporateSavings.potentialAiCuts.toLocaleString("es-CL")}</h3>
-              <p className="text-xs text-emerald-600 font-semibold mt-1">Detectado por el motor de IA</p>
+              <p className="text-xs text-emerald-600 font-semibold mt-1">Detectado por IA</p>
             </CardContent>
           </Card>
         </div>
+
+        {/* Embedded Power BI / Looker Studio Live Dashboard */}
+        <Card className="border border-slate-200 shadow-lg bg-white overflow-hidden">
+          <CardHeader className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-4 gap-4 bg-slate-900 text-white p-6">
+            <div>
+              <CardTitle className="text-xl font-bold flex items-center gap-2 text-white">
+                <BarChart2 className="w-6 h-6 text-emerald-400" /> Tablero de Inteligencia de Negocios (Power BI / Looker Studio)
+              </CardTitle>
+              <p className="text-xs text-slate-400 mt-1">Gráficos interactivos incrustados en tiempo real conectados con tus datos de empresa.</p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs bg-emerald-500/20 text-emerald-300 font-bold px-3 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Sincronización en Vivo
+              </span>
+              <a 
+                href="/api/v1/export/metrics" 
+                target="_blank" 
+                className="text-xs text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-full border border-slate-700 font-medium flex items-center gap-1 transition-colors"
+              >
+                API Endpoint <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </CardHeader>
+
+          <CardContent className="p-0">
+            {/* Interactive Embedded Power BI / DataStudio Iframe Container */}
+            <div className="relative w-full h-[600px] bg-slate-100 flex flex-col items-center justify-center border-b border-slate-200">
+              <iframe 
+                src="https://lookerstudio.google.com/embed/reporting/b648508e-1736-4c4e-b5ff-f2d4f2fa41ec/page/kIVD"
+                className="w-full h-full border-0"
+                allowFullScreen
+                title="Power BI / Looker Studio Dashboard Integrado"
+              />
+              
+              {/* Fallback interactive mock representation if iframe is restricted */}
+              <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center text-white space-y-4">
+                <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30">
+                  <BarChart2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold">Gráfico Interactivo de Power BI / Looker Studio</h3>
+                <p className="text-slate-300 max-w-lg text-sm leading-relaxed">
+                  Este contenedor incrusta directamente tus reportes de <strong>Power BI</strong> o <strong>Looker Studio</strong> dentro de FinanzasPro. Tus gráficos de ahorro corporativo, gastos por departamento y ROI se visualizan aquí mismo sin salir de la app.
+                </p>
+                <div className="flex gap-3 pt-2">
+                  <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold gap-2 text-xs">
+                    Conectar mi Reporte de Power BI / DataStudio
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Corporate Savings Breakdown Table */}
         <Card className="border border-slate-200 shadow-sm bg-white">
@@ -116,9 +172,6 @@ export default async function B2bDashboardPage() {
             <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <PiggyBank className="w-5 h-5 text-emerald-600" /> Diagnóstico de Recortes y Ahorro en Costos Operativos
             </CardTitle>
-            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full gap-2 text-xs font-bold">
-              <Sparkles className="w-4 h-4" /> Optimizar Gastos con IA
-            </Button>
           </CardHeader>
 
           <CardContent className="p-6">
@@ -143,50 +196,6 @@ export default async function B2bDashboardPage() {
                   <div className="text-right">
                     <span className="text-xs text-slate-400 block">Ahorro Mensual Logrado</span>
                     <span className="text-xl font-black text-emerald-600">+${cat.monthlySaving.toLocaleString("es-CL")} CLP</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Configured GPS Promotion Stores */}
-        <Card className="border border-slate-200 shadow-sm bg-white">
-          <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100 pb-4">
-            <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <Target className="w-5 h-5 text-emerald-600" /> Sucursales y Promociones Geolocalizadas
-            </CardTitle>
-            <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full">
-              {deals.length} Tiendas Activas
-            </span>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              {deals.map((deal) => (
-                <div 
-                  key={deal.id} 
-                  className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-emerald-300 hover:bg-white transition-all"
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-extrabold text-slate-900 text-base">{deal.companyName}</span>
-                      <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                        {deal.tier}
-                      </span>
-                    </div>
-                    <p className="text-sm font-medium text-slate-700">{deal.message}</p>
-                    <div className="flex items-center gap-4 text-xs text-slate-500 pt-1">
-                      <span>📍 Lat: {deal.latitude.toFixed(4)}, Lng: {deal.longitude.toFixed(4)}</span>
-                      <span>🎯 Radio: {deal.radiusMeters}m</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 shrink-0">
-                    <Link href="/deals" target="_blank">
-                      <Button variant="outline" size="sm" className="rounded-full border-slate-300 font-bold text-xs">
-                        Ver en Mapa GPS
-                      </Button>
-                    </Link>
                   </div>
                 </div>
               ))}
