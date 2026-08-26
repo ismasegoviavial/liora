@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Building2, Eye, MapPin, Plus, TrendingUp, Zap, FileText, DollarSign, Wallet, ArrowUpRight, ArrowDownRight, Target, Users, Calendar } from "lucide-react"
 import Link from "next/link"
+import { CreateDealDialog } from "@/components/b2b/CreateDealDialog"
 
 export const dynamic = "force-dynamic"
 
@@ -61,9 +62,7 @@ export default async function B2bDashboardPage() {
             <Button variant="outline" className="rounded-full font-bold gap-2 text-xs border-slate-300">
               <FileText className="w-4 h-4 text-blue-600" /> Emitir Factura SII
             </Button>
-            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold gap-2 shadow-lg shadow-emerald-600/20 text-xs">
-              <Plus className="w-4 h-4" /> Crear Campaña GPS
-            </Button>
+            <CreateDealDialog />
           </div>
         </div>
 
