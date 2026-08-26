@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Sparkles, TrendingUp, CheckCircle, RefreshCw, Plus, Edit2 } from "lucide-react"
+import { Sparkles, TrendingUp, CheckCircle, RefreshCw, Plus, Edit2, Trash2 } from "lucide-react"
 
 type BudgetItem = {
   category: string
@@ -27,10 +27,11 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
   const [generatedSavings, setGeneratedSavings] = useState<number | null>(null)
   const [isAiGenerated, setIsAiGenerated] = useState(false)
 
-  // Manual creation state
+  // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [newCategory, setNewCategory] = useState("")
-  const [newAmount, setNewAmount] = useState("")
+  const [editingCategory, setEditingCategory] = useState<string | null>(null)
+  const [categoryName, setCategoryName] = useState("")
+  const [categoryAmount, setCategoryAmount] = useState("")
 
   async function handleGenerateAiBudget() {
     setLoading(true)
@@ -55,30 +56,42 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
     }
   }
 
-  function handleAddManualBudget(e: React.FormEvent) {
-    e.preventDefault()
-    if (!newCategory || !newAmount) return
+  function openCreateModal() {
+    setEditingCategory(null)
+    setCategoryName("")
+    setCategoryAmount("")
+    setIsDialogOpen(true)
+  }
 
-    const amountNum = parseFloat(newAmount)
+  function openEditModal(item: BudgetItem) {
+    setEditingCategory(item.category)
+    setCategoryName(item.category)
+    setCategoryAmount(item.amount.toString())
+    setIsDialogOpen(true)
+  }
+
+  function handleSaveBudget(e: React.FormEvent) {
+    e.preventDefault()
+    if (!categoryName || !categoryAmount) return
+
+    const amountNum = parseFloat(categoryAmount)
     if (isNaN(amountNum)) return
 
-    const existingIndex = budgets.findIndex(
-      (b) => b.category.toLowerCase() === newCategory.trim().toLowerCase()
-    )
-
-    if (existingIndex >= 0) {
-      const updated = [...budgets]
-      updated[existingIndex] = {
-        ...updated[existingIndex],
-        amount: amountNum,
-        reasoning: "Límite ingresado manualmente."
-      }
-      setBudgets(updated)
+    if (editingCategory) {
+      // Update existing item
+      setBudgets(
+        budgets.map((b) =>
+          b.category === editingCategory
+            ? { ...b, category: categoryName.trim(), amount: amountNum }
+            : b
+        )
+      )
     } else {
+      // Create new item
       setBudgets([
         ...budgets,
         {
-          category: newCategory.trim(),
+          category: categoryName.trim(),
           amount: amountNum,
           spent: 0,
           reasoning: "Categoría agregada manualmente."
@@ -86,9 +99,11 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
       ])
     }
 
-    setNewCategory("")
-    setNewAmount("")
     setIsDialogOpen(false)
+  }
+
+  function handleDeleteBudget(category: string) {
+    setBudgets(budgets.filter((b) => b.category !== category))
   }
 
   return (
@@ -105,48 +120,14 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
             )}
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Configura tus límites manualmente o deja que la IA calcule tus márgenes ideales de ahorro.
+            Edita cualquier límite o agrega nuevas categorías personalizadas según tus necesidades.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          {/* Manual Add Dialog */}
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="rounded-full font-bold gap-2">
-                <Plus className="w-4 h-4" /> Ingresar Manual
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Configurar Límite Manual</DialogTitle>
-              </DialogHeader>
-              <form onSubmit={handleAddManualBudget} className="space-y-4 pt-2">
-                <div>
-                  <label className="text-xs font-semibold text-muted-foreground uppercase">Categoría</label>
-                  <Input 
-                    placeholder="Ej: Supermercado, Gimnasio, Restaurant" 
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-muted-foreground uppercase">Monto Límite Mensual (CLP)</label>
-                  <Input 
-                    type="number"
-                    placeholder="Ej: 250000" 
-                    value={newAmount}
-                    onChange={(e) => setNewAmount(e.target.value)}
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full font-bold rounded-full">
-                  Guardar Límite
-                </Button>
-              </form>
-            </DialogContent>
-          </Dialog>
+          <Button onClick={openCreateModal} variant="outline" className="rounded-full font-bold gap-2">
+            <Plus className="w-4 h-4" /> Agregar Categoría
+          </Button>
 
           <Button 
             onClick={handleGenerateAiBudget} 
@@ -162,6 +143,41 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
           </Button>
         </div>
       </div>
+
+      {/* Shared Create/Edit Modal */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {editingCategory ? `Editar Presupuesto: ${editingCategory}` : "Crear Nueva Categoría"}
+            </DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSaveBudget} className="space-y-4 pt-2">
+            <div>
+              <label className="text-xs font-semibold text-muted-foreground uppercase">Nombre de la Categoría</label>
+              <Input 
+                placeholder="Ej: Mascotas, Gimnasio, Viajes..." 
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-muted-foreground uppercase">Monto Límite Mensual (CLP)</label>
+              <Input 
+                type="number"
+                placeholder="Ej: 150000" 
+                value={categoryAmount}
+                onChange={(e) => setCategoryAmount(e.target.value)}
+                required
+              />
+            </div>
+            <Button type="submit" className="w-full font-bold rounded-full">
+              {editingCategory ? "Guardar Cambios" : "Crear Categoría"}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* Ai Savings Banner Alert */}
       {isAiGenerated && generatedSavings && (
@@ -191,15 +207,34 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
           const isOverBudget = spent > item.amount
 
           return (
-            <Card key={item.category} className="overflow-hidden">
+            <Card key={item.category} className="overflow-hidden group hover:border-slate-300 transition-all">
               <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-3 gap-2">
-                  <div>
-                    <div className="font-bold text-lg text-foreground">{item.category}</div>
-                    {item.reasoning && (
-                      <p className="text-xs text-muted-foreground mt-0.5">{item.reasoning}</p>
-                    )}
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <div className="font-bold text-lg text-foreground flex items-center gap-2">
+                        {item.category}
+                        <button 
+                          onClick={() => openEditModal(item)} 
+                          className="text-slate-400 hover:text-slate-700 transition-colors p-1"
+                          title="Editar esta categoría"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteBudget(item.category)} 
+                          className="text-slate-300 hover:text-red-500 transition-colors p-1"
+                          title="Eliminar esta categoría"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                      {item.reasoning && (
+                        <p className="text-xs text-muted-foreground mt-0.5">{item.reasoning}</p>
+                      )}
+                    </div>
                   </div>
+
                   <div className="text-left md:text-right">
                     <span className={`font-bold text-lg ${isOverBudget ? "text-red-500" : "text-foreground"}`}>
                       ${spent.toLocaleString("es-CL")}
