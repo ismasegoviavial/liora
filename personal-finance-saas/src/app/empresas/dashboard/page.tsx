@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Building2, Eye, MapPin, Plus, TrendingUp, Zap, FileText, DollarSign, Wallet, ArrowUpRight, ArrowDownRight, Target, BarChart3, PieChart, ShieldAlert, Receipt, Calculator, CheckCircle2, Clock, Activity, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import { CreateDealDialog } from "@/components/b2b/CreateDealDialog"
+import { CreateInvoiceDialog } from "@/components/b2b/CreateInvoiceDialog"
 import { ensureInitialSeed } from "@/lib/seed"
 
 export const dynamic = "force-dynamic"
@@ -68,9 +69,7 @@ export default async function B2bDashboardPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="rounded-full font-bold gap-2 text-xs border-slate-300">
-              <FileText className="w-4 h-4 text-blue-600" /> Exportar Libro F29 (SII)
-            </Button>
+            <CreateInvoiceDialog />
             <CreateDealDialog />
           </div>
         </div>
