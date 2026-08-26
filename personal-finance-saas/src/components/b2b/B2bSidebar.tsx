@@ -2,18 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Wallet, PiggyBank, Bot, Target, FileText } from "lucide-react"
+import { Store, Target, CreditCard, Users } from "lucide-react"
 
 export function B2bSidebar() {
   const pathname = usePathname()
 
   const menuItems = [
-    { label: "Estado de Resultados (P&L)", href: "/empresas/dashboard", icon: LayoutDashboard },
-    { label: "Presupuesto Empresarial", href: "/empresas/presupuesto", icon: PiggyBank },
-    { label: "Cuentas & Tarjetas Bancarias", href: "/empresas/bancos", icon: Wallet },
-    { label: "Asesor Financiero IA", href: "/empresas/asesor-ia", icon: Bot },
+    { label: "Servicio & Tiendas Incorporadas", href: "/empresas/dashboard", icon: Store },
     { label: "Campañas & Descuentos GPS", href: "/empresas/campanas", icon: Target },
-    { label: "Facturas SII & F29", href: "/empresas/facturas", icon: FileText },
   ]
 
   return (
@@ -26,7 +22,7 @@ export function B2bSidebar() {
           </div>
           <div>
             <h2 className="font-extrabold text-white text-base tracking-tight leading-tight">FinanzasPro</h2>
-            <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full uppercase">Portal Empresas</span>
+            <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full uppercase">Portal de Marcas</span>
           </div>
         </div>
 
@@ -53,9 +49,9 @@ export function B2bSidebar() {
         </nav>
       </div>
 
-      {/* Footer info without cross-system link */}
+      {/* Footer info */}
       <div className="pt-4 border-t border-slate-800 text-[11px] text-slate-500 text-center">
-        FinanzasPro Corporate Suite v2.4
+        FinanzasPro Portal Marcas v2.5
       </div>
     </aside>
   )

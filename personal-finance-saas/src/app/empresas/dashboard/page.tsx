@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Building2, MapPin, Plus, Users, ShieldCheck, CheckCircle2, Navigation, Target, Sparkles, Store, CreditCard } from "lucide-react"
 import Link from "next/link"
 import { CreateDealDialog } from "@/components/b2b/CreateDealDialog"
+import { B2bSidebar } from "@/components/b2b/B2bSidebar"
 import { ensureInitialSeed } from "@/lib/seed"
 
 export const dynamic = "force-dynamic"
@@ -44,32 +45,10 @@ export default async function B2bDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Corporate Header Bar */}
-      <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500 text-slate-900 font-extrabold flex items-center justify-center text-lg shadow-lg shadow-emerald-500/20">
-              🏢
-            </div>
-            <div>
-              <span className="font-extrabold text-lg text-white tracking-tight">FinanzasPro <span className="text-emerald-400 font-normal">Empresas</span></span>
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full ml-2 uppercase">Portal de Marcas</span>
-            </div>
-          </div>
+    <div className="flex min-h-screen bg-slate-50">
+      <B2bSidebar />
 
-          <div className="flex items-center gap-3">
-            <Link href="/empresas">
-              <Button variant="ghost" className="text-slate-300 hover:text-white hover:bg-slate-800 text-xs">
-                Ver Planes B2B
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <main className="flex-1 p-8 space-y-8">
         {/* Top Title & Quick Action */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
