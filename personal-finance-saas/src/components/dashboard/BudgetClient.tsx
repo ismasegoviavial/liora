@@ -4,7 +4,15 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { Sparkles, TrendingUp, CheckCircle, RefreshCw } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Sparkles, TrendingUp, CheckCircle, RefreshCw, Plus, Edit2 } from "lucide-react"
 
 type BudgetItem = {
   category: string
@@ -19,6 +27,11 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
   const [generatedSavings, setGeneratedSavings] = useState<number | null>(null)
   const [isAiGenerated, setIsAiGenerated] = useState(false)
 
+  // Manual creation state
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [newCategory, setNewCategory] = useState("")
+  const [newAmount, setNewAmount] = useState("")
+
   async function handleGenerateAiBudget() {
     setLoading(true)
     try {
@@ -27,10 +40,9 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
       
       const data = await res.json()
       if (data.budgets) {
-        // Add random mock spent for demonstration UI
         const formatted = data.budgets.map((b: any) => ({
           ...b,
-          spent: Math.round(b.amount * (0.4 + Math.random() * 0.5)) // 40% to 90% spent
+          spent: Math.round(b.amount * (0.4 + Math.random() * 0.5))
         }))
         setBudgets(formatted)
         setGeneratedSavings(data.estimatedSavings || 120000)
@@ -43,6 +55,42 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
     }
   }
 
+  function handleAddManualBudget(e: React.FormEvent) {
+    e.preventDefault()
+    if (!newCategory || !newAmount) return
+
+    const amountNum = parseFloat(newAmount)
+    if (isNaN(amountNum)) return
+
+    const existingIndex = budgets.findIndex(
+      (b) => b.category.toLowerCase() === newCategory.trim().toLowerCase()
+    )
+
+    if (existingIndex >= 0) {
+      const updated = [...budgets]
+      updated[existingIndex] = {
+        ...updated[existingIndex],
+        amount: amountNum,
+        reasoning: "Límite ingresado manualmente."
+      }
+      setBudgets(updated)
+    } else {
+      setBudgets([
+        ...budgets,
+        {
+          category: newCategory.trim(),
+          amount: amountNum,
+          spent: 0,
+          reasoning: "Categoría agregada manualmente."
+        }
+      ])
+    }
+
+    setNewCategory("")
+    setNewAmount("")
+    setIsDialogOpen(false)
+  }
+
   return (
     <div className="space-y-6">
       {/* Header Banner */}
@@ -52,29 +100,67 @@ export default function BudgetClient({ initialBudgets }: { initialBudgets: Budge
             Presupuesto Mensual
             {isAiGenerated && (
               <span className="text-xs bg-accent text-accent-foreground font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                Generado con IA
+                Optimizado con IA
               </span>
             )}
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            {isAiGenerated
-              ? "Tu presupuesto fue optimizado analizando tus hábitos para maximizar tu ahorro."
-              : "Genera un presupuesto automático analizando tus ingresos y gastos históricos con IA."}
+            Configura tus límites manualmente o deja que la IA calcule tus márgenes ideales de ahorro.
           </p>
         </div>
 
-        <Button 
-          onClick={handleGenerateAiBudget} 
-          disabled={loading}
-          className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-[0_0_15px_rgba(0,229,255,0.3)] font-bold rounded-full gap-2 shrink-0"
-        >
-          {loading ? (
-            <RefreshCw className="w-4 h-4 animate-spin" />
-          ) : (
-            <Sparkles className="w-4 h-4" />
-          )}
-          {loading ? "Analizando Gastos..." : "Auto-Generar con IA"}
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Manual Add Dialog */}
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="rounded-full font-bold gap-2">
+                <Plus className="w-4 h-4" /> Ingresar Manual
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Configurar Límite Manual</DialogTitle>
+              </DialogHeader>
+              <form onSubmit={handleAddManualBudget} className="space-y-4 pt-2">
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase">Categoría</label>
+                  <Input 
+                    placeholder="Ej: Supermercado, Gimnasio, Restaurant" 
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase">Monto Límite Mensual (CLP)</label>
+                  <Input 
+                    type="number"
+                    placeholder="Ej: 250000" 
+                    value={newAmount}
+                    onChange={(e) => setNewAmount(e.target.value)}
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full font-bold rounded-full">
+                  Guardar Límite
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
+
+          <Button 
+            onClick={handleGenerateAiBudget} 
+            disabled={loading}
+            className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-[0_0_15px_rgba(0,229,255,0.3)] font-bold rounded-full gap-2 shrink-0"
+          >
+            {loading ? (
+              <RefreshCw className="w-4 h-4 animate-spin" />
+            ) : (
+              <Sparkles className="w-4 h-4" />
+            )}
+            {loading ? "Analizando Gastos..." : "Auto-Generar con IA"}
+          </Button>
+        </div>
       </div>
 
       {/* Ai Savings Banner Alert */}
