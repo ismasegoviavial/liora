@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { PiggyBank, TrendingUp, Sparkles, Zap, ArrowUpRight, Target, DollarSign, Wallet, RefreshCw, BarChart2, ExternalLink, ShieldCheck, PieChart } from "lucide-react"
+import { PiggyBank, TrendingUp, Sparkles, Zap, ArrowUpRight, ArrowDownRight, Target, DollarSign, Wallet, RefreshCw, BarChart2, ExternalLink, ShieldCheck, PieChart, AlertTriangle, Clock, Calendar, CheckCircle2, Building2 } from "lucide-react"
 import Link from "next/link"
 import { CreateDealDialog } from "@/components/b2b/CreateDealDialog"
 import { ensureInitialSeed } from "@/lib/seed"
@@ -14,22 +14,29 @@ export default async function B2bDashboardPage() {
     orderBy: { createdAt: "desc" }
   })
 
-  // Corporate Savings Metrics
-  const corporateSavings = {
-    totalSavedThisMonth: 1850000,
-    annualProjectedSavings: 22200000,
+  // Management Control KPIs (Control de Gestión)
+  const managementKpis = {
+    currentCash: 18450000,
+    monthlyBurnRate: 4200000,
+    runwayMonths: 4.4,
+    overdueInvoicesAmount: 1450000,
     timeSavedHours: 18,
-    potentialAiCuts: 640000,
-    savingsCategories: [
-      { category: "Licencias & Software SaaS", currentCost: 1200000, optimizedCost: 850000, monthlySaving: 350000, status: "Optimizado con IA" },
-      { category: "Servicios Básicos & Telecom", currentCost: 650000, optimizedCost: 480000, monthlySaving: 170000, status: "Optimizado con IA" },
-      { category: "Insumos & Compras Proveedores", currentCost: 4500000, optimizedCost: 3800000, monthlySaving: 700000, status: "Oportunidad de Ahorro" },
-      { category: "Comisiones Bancarias & POS", currentCost: 480000, optimizedCost: 240000, monthlySaving: 240000, status: "Optimizado con IA" },
-    ]
+    totalSavedThisMonth: 1850000,
   }
 
-  // Sample embed URL for Looker Studio / Power BI
-  const embeddedDashboardUrl = "https://lookerstudio.google.com/embed/reporting/0B1a2b3c4d5e/page/1M"
+  // 90-Day Cash Flow Projection
+  const cashFlowProjection = [
+    { month: "Este Mes (Agosto)", incoming: 14250000, outgoing: 10800000, netCash: 18450000 },
+    { month: "Septiembre (Proyectado)", incoming: 15100000, outgoing: 11200000, netCash: 22350000 },
+    { month: "Octubre (Proyectado)", incoming: 16500000, outgoing: 11500000, netCash: 27350000 },
+  ]
+
+  // AI Management Alerts
+  const aiAlerts = [
+    { id: 1, type: "danger", title: "Factura Vencida Pendiente de Cobro", desc: "Haka Honu SpA registra $1.450.000 CLP con 12 días de mora.", action: "Enviar Recordatorio de Cobro" },
+    { id: 2, type: "warning", title: "Desvío en Presupuesto de Marketing", desc: "El gasto publicitario superó en $180.000 CLP la meta estimada del mes.", action: "Ajustar Límite" },
+    { id: 3, type: "success", title: "Oportunidad de Ahorro en Telecomunicaciones", desc: "Detectamos un sobreprecio del 24% en tu plan de internet corporativo.", action: "Ver Oferta Optimizada" },
+  ]
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -42,7 +49,7 @@ export default async function B2bDashboardPage() {
             </div>
             <div>
               <span className="font-extrabold text-lg text-white tracking-tight">FinanzasPro <span className="text-emerald-400 font-normal">Empresas</span></span>
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full ml-2 uppercase">Ahorro Corporativo</span>
+              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full ml-2 uppercase">Control de Gestión</span>
             </div>
           </div>
 
@@ -66,8 +73,8 @@ export default async function B2bDashboardPage() {
         {/* Top Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Panel de Ahorro Empresarial & BI</h1>
-            <p className="text-slate-500 text-sm mt-1">Visualiza los indicadores de ahorro corporativo integrados directamente con Power BI / Looker Studio.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Cuadro de Mando & Control de Gestión</h1>
+            <p className="text-slate-500 text-sm mt-1">Monitorea el flujo de caja proyectado, Burn Rate, salud financiera y dashboards integrados.</p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -75,17 +82,17 @@ export default async function B2bDashboardPage() {
           </div>
         </div>
 
-        {/* Big Savings Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="border-2 border-emerald-500/30 shadow-md bg-gradient-to-br from-emerald-900 to-slate-900 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <PiggyBank className="w-24 h-24 text-emerald-400" />
-            </div>
-            <CardContent className="p-6 relative z-10">
-              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Ahorro Corporativo Generado (Este Mes)</span>
-              <h3 className="text-4xl font-black text-white mt-2">${corporateSavings.totalSavedThisMonth.toLocaleString("es-CL")} CLP</h3>
-              <p className="text-xs text-emerald-300 font-semibold mt-2 flex items-center gap-1">
-                <TrendingUp className="w-3.5 h-3.5" /> Proyección anual: ${corporateSavings.annualProjectedSavings.toLocaleString("es-CL")} CLP
+        {/* Management Control KPI Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="border border-slate-200 shadow-sm bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Caja Disponible Real</span>
+                <Wallet className="w-5 h-5 text-emerald-600" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mt-2">${managementKpis.currentCash.toLocaleString("es-CL")}</h3>
+              <p className="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1">
+                <ArrowUpRight className="w-3.5 h-3.5" /> Saldo disponible en bancos
               </p>
             </CardContent>
           </Card>
@@ -93,34 +100,123 @@ export default async function B2bDashboardPage() {
           <Card className="border border-slate-200 shadow-sm bg-white">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tiempo Optimizado</span>
-                <Zap className="w-5 h-5 text-amber-500" />
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Burn Rate Mensual</span>
+                <ArrowDownRight className="w-5 h-5 text-red-500" />
               </div>
-              <h3 className="text-3xl font-extrabold text-slate-900 mt-2">{corporateSavings.timeSavedHours} horas</h3>
-              <p className="text-xs text-slate-500 mt-1">Ahorradas en gestión de proveedores</p>
+              <h3 className="text-2xl font-black text-red-600 mt-2">${managementKpis.monthlyBurnRate.toLocaleString("es-CL")}</h3>
+              <p className="text-xs text-slate-500 mt-1">Gasto operativo neto mensual</p>
             </CardContent>
           </Card>
 
           <Card className="border border-slate-200 shadow-sm bg-white">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Potencial de Ahorro IA</span>
-                <Sparkles className="w-5 h-5 text-accent" />
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Runway Operativo</span>
+                <Clock className="w-5 h-5 text-blue-600" />
               </div>
-              <h3 className="text-3xl font-extrabold text-emerald-600 mt-2">${corporateSavings.potentialAiCuts.toLocaleString("es-CL")}</h3>
-              <p className="text-xs text-emerald-600 font-semibold mt-1">Detectado por IA</p>
+              <h3 className="text-2xl font-black text-blue-600 mt-2">{managementKpis.runwayMonths} meses</h3>
+              <p className="text-xs text-blue-600 font-semibold mt-1">Meses de vida con la caja actual</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-200 shadow-sm bg-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Cobranza Vencida</span>
+                <AlertTriangle className="w-5 h-5 text-amber-600" />
+              </div>
+              <h3 className="text-2xl font-black text-amber-600 mt-2">${managementKpis.overdueInvoicesAmount.toLocaleString("es-CL")}</h3>
+              <p className="text-xs text-slate-500 mt-1">Facturas sin cobrar con mora</p>
             </CardContent>
           </Card>
         </div>
+
+        {/* 90-Day Cash Flow Projection Card */}
+        <Card className="border border-slate-200 shadow-sm bg-white">
+          <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100 pb-4">
+            <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-emerald-600" /> Proyección de Flujo de Caja a 90 Días (Cash Flow)
+            </CardTitle>
+            <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full">
+              Modelo Predictivo Activo
+            </span>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {cashFlowProjection.map((item, idx) => (
+                <div key={idx} className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3">
+                  <div className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-emerald-600" /> {item.month}
+                  </div>
+                  
+                  <div className="space-y-1 text-xs">
+                    <div className="flex justify-between text-emerald-700 font-semibold">
+                      <span>(+) Ingresos Proyectados</span>
+                      <span>+${item.incoming.toLocaleString("es-CL")}</span>
+                    </div>
+                    <div className="flex justify-between text-red-600 font-semibold">
+                      <span>(-) Egresos Proyectados</span>
+                      <span>-${item.outgoing.toLocaleString("es-CL")}</span>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-200 pt-2 flex justify-between items-center">
+                    <span className="text-xs font-bold text-slate-500">Saldo Final de Caja</span>
+                    <span className="text-base font-black text-slate-900">${item.netCash.toLocaleString("es-CL")}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* AI Management Alerts Engine */}
+        <Card className="border border-slate-200 shadow-sm bg-white">
+          <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100 pb-4">
+            <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-purple-600" /> Alertas Automáticas de Control de Gestión (IA Gemini)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="space-y-3">
+              {aiAlerts.map((alert) => (
+                <div 
+                  key={alert.id}
+                  className={`p-4 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-3 ${
+                    alert.type === 'danger' ? 'bg-red-50/60 border-red-200 text-red-900' :
+                    alert.type === 'warning' ? 'bg-amber-50/60 border-amber-200 text-amber-900' :
+                    'bg-emerald-50/60 border-emerald-200 text-emerald-900'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-full shrink-0 mt-0.5">
+                      {alert.type === 'danger' && <AlertTriangle className="w-5 h-5 text-red-600" />}
+                      {alert.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600" />}
+                      {alert.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+                    </div>
+                    <div>
+                      <div className="font-bold text-sm">{alert.title}</div>
+                      <p className="text-xs opacity-90 mt-0.5">{alert.desc}</p>
+                    </div>
+                  </div>
+
+                  <Button size="sm" variant="outline" className="rounded-full font-bold text-xs shrink-0 border-current bg-white">
+                    {alert.action}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Embedded Power BI / Looker Studio Live Dashboard */}
         <Card className="border border-slate-200 shadow-lg bg-white overflow-hidden">
           <CardHeader className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-4 gap-4 bg-slate-900 text-white p-6">
             <div>
               <CardTitle className="text-xl font-bold flex items-center gap-2 text-white">
-                <BarChart2 className="w-6 h-6 text-emerald-400" /> Tablero de Inteligencia de Negocios (Power BI / Looker Studio)
+                <BarChart2 className="w-6 h-6 text-emerald-400" /> Tablero de Control Incrustado (Power BI / Looker Studio)
               </CardTitle>
-              <p className="text-xs text-slate-400 mt-1">Gráficos interactivos incrustados en tiempo real conectados con tus datos de empresa.</p>
+              <p className="text-xs text-slate-400 mt-1">Gráficos interactivos en tiempo real incrustados en la plataforma.</p>
             </div>
 
             <div className="flex items-center gap-2">
@@ -138,8 +234,7 @@ export default async function B2bDashboardPage() {
           </CardHeader>
 
           <CardContent className="p-0">
-            {/* Interactive Embedded Power BI / DataStudio Iframe Container */}
-            <div className="relative w-full h-[600px] bg-slate-100 flex flex-col items-center justify-center border-b border-slate-200">
+            <div className="relative w-full h-[550px] bg-slate-100 flex flex-col items-center justify-center border-b border-slate-200">
               <iframe 
                 src="https://lookerstudio.google.com/embed/reporting/b648508e-1736-4c4e-b5ff-f2d4f2fa41ec/page/kIVD"
                 className="w-full h-full border-0"
@@ -147,58 +242,15 @@ export default async function B2bDashboardPage() {
                 title="Power BI / Looker Studio Dashboard Integrado"
               />
               
-              {/* Fallback interactive mock representation if iframe is restricted */}
               <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center text-white space-y-4">
                 <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30">
                   <BarChart2 className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-bold">Gráfico Interactivo de Power BI / Looker Studio</h3>
                 <p className="text-slate-300 max-w-lg text-sm leading-relaxed">
-                  Este contenedor incrusta directamente tus reportes de <strong>Power BI</strong> o <strong>Looker Studio</strong> dentro de FinanzasPro. Tus gráficos de ahorro corporativo, gastos por departamento y ROI se visualizan aquí mismo sin salir de la app.
+                  Tus tableros ejecutivos personalizados de <strong>Power BI</strong> o <strong>Looker Studio</strong> se renderizan aquí en vivo para el control de gestión de tu empresa.
                 </p>
-                <div className="flex gap-3 pt-2">
-                  <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold gap-2 text-xs">
-                    Conectar mi Reporte de Power BI / DataStudio
-                  </Button>
-                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Corporate Savings Breakdown Table */}
-        <Card className="border border-slate-200 shadow-sm bg-white">
-          <CardHeader className="flex flex-row items-center justify-between border-b border-slate-100 pb-4">
-            <CardTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <PiggyBank className="w-5 h-5 text-emerald-600" /> Diagnóstico de Recortes y Ahorro en Costos Operativos
-            </CardTitle>
-          </CardHeader>
-
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              {corporateSavings.savingsCategories.map((cat) => (
-                <div 
-                  key={cat.category}
-                  className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-emerald-300 hover:bg-white transition-all"
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-extrabold text-slate-900 text-base">{cat.category}</span>
-                      <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                        {cat.status}
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-500">
-                      Gasto actual: <span className="line-through">${cat.currentCost.toLocaleString("es-CL")}</span> ➔ Meta optimizada: <strong className="text-slate-800">${cat.optimizedCost.toLocaleString("es-CL")}</strong>
-                    </p>
-                  </div>
-
-                  <div className="text-right">
-                    <span className="text-xs text-slate-400 block">Ahorro Mensual Logrado</span>
-                    <span className="text-xl font-black text-emerald-600">+${cat.monthlySaving.toLocaleString("es-CL")} CLP</span>
-                  </div>
-                </div>
-              ))}
             </div>
           </CardContent>
         </Card>
