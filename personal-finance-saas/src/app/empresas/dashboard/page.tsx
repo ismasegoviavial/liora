@@ -101,7 +101,7 @@ export default async function B2bDashboardPage() {
             <div>
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Visualizaciones de Ofertas</span>
               <h3 className="text-4xl font-black text-slate-900 mt-1">{trafficMetrics.totalPeopleReached.toLocaleString("es-CL")} usuarios</h3>
-              <p className="text-xs text-slate-500 mt-1">Personas que han visto tus cupones y marcas en el mapa interactivo de la app</p>
+              <p className="text-xs text-slate-500 mt-1">Personas que han visto tus ofertas y convenios destacados en el mapa de la app</p>
             </div>
             <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
               <Eye className="w-6 h-6" />

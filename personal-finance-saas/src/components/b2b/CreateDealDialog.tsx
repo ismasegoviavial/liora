@@ -114,7 +114,7 @@ export function CreateDealDialog() {
           </div>
 
           <div>
-            <Label className="text-xs font-semibold text-slate-500 uppercase">Mensaje de la Oferta / Descuento</Label>
+            <Label className="text-xs font-semibold text-slate-500 uppercase">Mensaje de la Oferta / Promoción</Label>
             <Input 
               placeholder="Ej: 2x1 en Cappuccino de 15:00 a 18:00 hrs" 
               value={message}
