@@ -6,19 +6,19 @@ export default function EmpresasPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans">
       {/* B2B Header */}
-      <header className="px-8 h-20 flex items-center border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="flex items-center gap-2">
+      <header className="px-4 md:px-8 h-20 flex items-center justify-between border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-xl">
             $
           </div>
-          <div className="font-bold text-2xl text-foreground tracking-tight">FinanzasPro <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full uppercase ml-1">Business</span></div>
+          <div className="font-bold text-lg sm:text-2xl text-foreground tracking-tight flex items-center gap-1">
+            FinanzasPro <span className="text-[10px] sm:text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full uppercase font-bold">Business</span>
+          </div>
         </div>
-        <nav className="ml-auto flex gap-4 items-center">
-          <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Para Personas
-          </Link>
+
+        <nav className="flex items-center gap-3 shrink-0">
           <Link href="https://wa.me/?text=Hola!%20Me%20interesa%20anunciar%20mi%20empresa" target="_blank">
-            <Button className="rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 shadow-md shadow-emerald-200">
+            <Button className="rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 sm:px-6 text-xs sm:text-sm h-9 sm:h-10 shadow-md shadow-emerald-200">
               Hablemos
             </Button>
           </Link>
