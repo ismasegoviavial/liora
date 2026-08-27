@@ -64,7 +64,7 @@ export default function DealsMap({ deals }: { deals: Deal[] }) {
       <MapContainer center={center} zoom={13} scrollWheelZoom={true} className="w-full h-full">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {userLocation && (
