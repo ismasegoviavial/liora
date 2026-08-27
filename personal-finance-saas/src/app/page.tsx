@@ -8,26 +8,29 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans">
       {/* Header */}
-      <header className="px-8 h-20 flex items-center border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="flex items-center gap-2">
+      <header className="px-4 md:px-8 h-20 flex items-center justify-between border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl">
             $
           </div>
-          <div className="font-bold text-2xl text-foreground tracking-tight">FinanzasPro</div>
+          <div className="font-bold text-lg sm:text-2xl text-foreground tracking-tight">FinanzasPro</div>
         </div>
-        <nav className="ml-auto flex gap-4 items-center">
+
+        <nav className="flex gap-2 sm:gap-4 items-center shrink-0">
           <Link 
             href="/empresas" 
-            className="text-xs font-bold bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border border-emerald-300 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1"
+            className="text-[11px] sm:text-xs font-bold bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border border-emerald-300 px-2.5 sm:px-3 py-1.5 rounded-full transition-colors flex items-center gap-1"
           >
             🏢 Empresas
           </Link>
-          <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Iniciar Sesión
+
+          <Link href="/login" className="text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden xs:inline-block">
+            Ingresar
           </Link>
+
           <Link href="/dashboard">
-            <Button className="rounded-full px-6">
-              Ir al Dashboard
+            <Button className="rounded-full px-3 sm:px-6 text-xs sm:text-sm h-9 sm:h-10">
+              Dashboard
             </Button>
           </Link>
         </nav>
