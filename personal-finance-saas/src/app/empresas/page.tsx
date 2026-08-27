@@ -104,8 +104,11 @@ export default function EmpresasPage() {
               {/* Básico */}
               <div className="rounded-3xl p-6 lg:p-8 bg-card border border-border shadow-md flex flex-col justify-between">
                 <div>
+                  <div className="inline-block px-3 py-1 bg-slate-100 text-slate-700 text-xs font-bold rounded-full uppercase tracking-wider mb-4 border border-slate-200 w-fit">
+                    Locales Únicos
+                  </div>
                   <h3 className="text-2xl font-bold text-foreground mb-2">Básico Empresa</h3>
-                  <p className="text-muted-foreground text-sm mb-6 min-h-[2.5rem]">Para locales comerciales pequeños o independientes.</p>
+                  <p className="text-muted-foreground text-sm mb-6 min-h-[3rem] flex items-center">Para locales comerciales pequeños o independientes.</p>
                   <div className="text-2xl font-extrabold text-emerald-600 mb-8 py-3 border-y border-border/50">
                     A la medida
                   </div>
@@ -125,11 +128,11 @@ export default function EmpresasPage() {
               {/* Pro */}
               <div className="rounded-3xl p-6 lg:p-8 bg-card border-2 border-emerald-500 shadow-xl flex flex-col justify-between relative overflow-hidden">
                 <div>
-                  <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full uppercase tracking-wider mb-4 w-fit">
+                  <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full uppercase tracking-wider mb-4 border border-emerald-200 w-fit">
                     Recomendado
                   </div>
                   <h3 className="text-2xl font-bold text-foreground mb-2">Pro Empresa</h3>
-                  <p className="text-muted-foreground text-sm mb-6 min-h-[2.5rem]">Para marcas en expansión con múltiples sucursales.</p>
+                  <p className="text-muted-foreground text-sm mb-6 min-h-[3rem] flex items-center">Para marcas en expansión con múltiples sucursales.</p>
                   <div className="text-2xl font-extrabold text-emerald-600 mb-8 py-3 border-y border-emerald-100">
                     A la medida
                   </div>
@@ -154,7 +157,7 @@ export default function EmpresasPage() {
                     Cadenas y Franquicias
                   </div>
                   <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
-                  <p className="text-slate-400 text-sm mb-6 min-h-[2.5rem]">Para grandes cadenas de retail y restaurantes.</p>
+                  <p className="text-slate-400 text-sm mb-6 min-h-[3rem] flex items-center">Para grandes cadenas de retail y restaurantes.</p>
                   <div className="text-2xl font-extrabold text-emerald-400 mb-8 py-3 border-y border-slate-800">
                     Personalizado
                   </div>
