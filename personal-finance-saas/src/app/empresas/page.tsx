@@ -100,66 +100,72 @@ export default function EmpresasPage() {
               <p className="text-muted-foreground">Soluciones adaptadas al tamaño de tu negocio.</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
               {/* Básico */}
-              <div className="rounded-3xl p-8 bg-card border border-border shadow-md flex flex-col">
-                <h3 className="text-2xl font-bold text-foreground mb-2">Básico Empresa</h3>
-                <p className="text-muted-foreground mb-6 h-12">Para locales comerciales pequeños o independientes.</p>
-                <div className="text-2xl font-extrabold text-emerald-600 mb-8 py-2 border-y border-border/50">
-                  A la medida
-                </div>
+              <div className="rounded-3xl p-6 lg:p-8 bg-card border border-border shadow-md flex flex-col justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Básico Empresa</h3>
+                  <p className="text-muted-foreground text-sm mb-6 min-h-[2.5rem]">Para locales comerciales pequeños o independientes.</p>
+                  <div className="text-2xl font-extrabold text-emerald-600 mb-8 py-3 border-y border-border/50">
+                    A la medida
+                  </div>
 
-                <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> 1 Local Comercial</li>
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> 3 Ofertas activas simultáneas</li>
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> Radio de cobertura hasta 200m</li>
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> Notificaciones push geolocalizadas</li>
-                </ul>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> 1 Local Comercial</li>
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> 3 Ofertas activas simultáneas</li>
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> Radio de cobertura hasta 200m</li>
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> Notificaciones push geolocalizadas</li>
+                  </ul>
+                </div>
                 <Link href="https://wa.me/?text=Hola!%20Me%20interesa%20el%20Plan%20B%C3%A1sico%20Empresa" target="_blank">
                   <Button className="w-full rounded-full" variant="outline" size="lg">Hablemos</Button>
                 </Link>
               </div>
 
               {/* Pro */}
-              <div className="rounded-3xl p-8 bg-card border-2 border-emerald-500 shadow-xl flex flex-col relative overflow-hidden">
-                <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full uppercase tracking-wider mb-4 w-fit">
-                  Recomendado
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">Pro Empresa</h3>
-                <p className="text-muted-foreground mb-6 h-12">Para marcas en expansión con múltiples sucursales.</p>
-                <div className="text-2xl font-extrabold text-emerald-600 mb-8 py-2 border-y border-emerald-100">
-                  A la medida
-                </div>
+              <div className="rounded-3xl p-6 lg:p-8 bg-card border-2 border-emerald-500 shadow-xl flex flex-col justify-between relative overflow-hidden">
+                <div>
+                  <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full uppercase tracking-wider mb-4 w-fit">
+                    Recomendado
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Pro Empresa</h3>
+                  <p className="text-muted-foreground text-sm mb-6 min-h-[2.5rem]">Para marcas en expansión con múltiples sucursales.</p>
+                  <div className="text-2xl font-extrabold text-emerald-600 mb-8 py-3 border-y border-emerald-100">
+                    A la medida
+                  </div>
 
-                <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> 3 Locales Comerciales</li>
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> Ofertas activas ilimitadas</li>
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> Radio de cobertura personalizable</li>
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> Dashboard de Analytics y Conversiones</li>
-                  <li className="flex items-center gap-3 text-muted-foreground"><Check className="w-5 h-5 text-emerald-500" /> Prioridad alta en el mapa</li>
-                </ul>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> 3 Locales Comerciales</li>
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> Ofertas activas ilimitadas</li>
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> Radio de cobertura personalizable</li>
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> Dashboard de Analytics y Conversiones</li>
+                    <li className="flex items-center gap-3 text-muted-foreground text-sm"><Check className="w-5 h-5 text-emerald-500 shrink-0" /> Prioridad alta en el mapa</li>
+                  </ul>
+                </div>
                 <Link href="https://wa.me/?text=Hola!%20Me%20interesa%20el%20Plan%20Pro%20Empresa" target="_blank">
                   <Button className="w-full rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-200 font-bold" size="lg">Hablemos</Button>
                 </Link>
               </div>
 
               {/* Enterprise */}
-              <div className="rounded-3xl p-8 bg-slate-900 text-white shadow-2xl flex flex-col relative overflow-hidden">
-                <div className="inline-block px-3 py-1 bg-slate-800 text-slate-300 text-xs font-bold rounded-full uppercase tracking-wider mb-4 border border-slate-700 w-fit">
-                  Cadenas y Franquicias
-                </div>
-                <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
-                <p className="text-slate-400 mb-6 h-12">Para grandes cadenas de retail y restaurantes.</p>
-                <div className="text-2xl font-extrabold text-emerald-400 mb-8 py-2 border-y border-slate-800">
-                  Personalizado
-                </div>
+              <div className="rounded-3xl p-6 lg:p-8 bg-slate-900 text-white shadow-2xl flex flex-col justify-between relative overflow-hidden">
+                <div>
+                  <div className="inline-block px-3 py-1 bg-slate-800 text-slate-300 text-xs font-bold rounded-full uppercase tracking-wider mb-4 border border-slate-700 w-fit">
+                    Cadenas y Franquicias
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
+                  <p className="text-slate-400 text-sm mb-6 min-h-[2.5rem]">Para grandes cadenas de retail y restaurantes.</p>
+                  <div className="text-2xl font-extrabold text-emerald-400 mb-8 py-3 border-y border-slate-800">
+                    Personalizado
+                  </div>
 
-                <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center gap-3 text-slate-200"><Check className="w-5 h-5 text-emerald-400" /> Locales ilimitados a nivel nacional</li>
-                  <li className="flex items-center gap-3 text-slate-200"><Check className="w-5 h-5 text-emerald-400" /> Integración por API propia</li>
-                  <li className="flex items-center gap-3 text-slate-200"><Check className="w-5 h-5 text-emerald-400" /> Segmentación avanzada por hábitos</li>
-                  <li className="flex items-center gap-3 text-slate-200"><Check className="w-5 h-5 text-emerald-400" /> Account Manager dedicado 24/7</li>
-                </ul>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-center gap-3 text-slate-200 text-sm"><Check className="w-5 h-5 text-emerald-400 shrink-0" /> Locales ilimitados a nivel nacional</li>
+                    <li className="flex items-center gap-3 text-slate-200 text-sm"><Check className="w-5 h-5 text-emerald-400 shrink-0" /> Integración por API propia</li>
+                    <li className="flex items-center gap-3 text-slate-200 text-sm"><Check className="w-5 h-5 text-emerald-400 shrink-0" /> Segmentación avanzada por hábitos</li>
+                    <li className="flex items-center gap-3 text-slate-200 text-sm"><Check className="w-5 h-5 text-emerald-400 shrink-0" /> Account Manager dedicado 24/7</li>
+                  </ul>
+                </div>
                 <Link href="https://wa.me/?text=Hola!%20Me%20interesa%20el%20Plan%20Enterprise" target="_blank">
                   <Button className="w-full rounded-full bg-white text-slate-900 hover:bg-slate-100 font-bold" size="lg">Hablemos</Button>
                 </Link>
