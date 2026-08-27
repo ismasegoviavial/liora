@@ -95,43 +95,6 @@ export default async function B2bDashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Section 2: Indicator of People Attracted Through the App (Personas Atraídas) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="border-2 border-emerald-500/30 shadow-md bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-3xl relative overflow-hidden">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">Cupones Canjeados en Caja (100% Real)</span>
-                <Users className="w-6 h-6 text-emerald-400" />
-              </div>
-              <h3 className="text-4xl font-black text-white mt-3">{trafficMetrics.totalPhysicalVisits.toLocaleString("es-CL")} canjes</h3>
-              <p className="text-xs text-emerald-300 font-semibold mt-2 flex items-center gap-1">
-                <Navigation className="w-3.5 h-3.5" /> Atribución 100% exacta validada en caja registradora
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-slate-200 shadow-sm bg-white rounded-3xl">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Visualizaciones de Ofertas</span>
-                <Store className="w-5 h-5 text-blue-600" />
-              </div>
-              <h3 className="text-3xl font-black text-slate-900 mt-2">{trafficMetrics.totalPeopleReached.toLocaleString("es-CL")} usuarios</h3>
-              <p className="text-xs text-slate-500 mt-1">Personas que vieron tus cupones en el mapa</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border border-slate-200 shadow-sm bg-white rounded-3xl">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tasa de Conversión de Tráfico</span>
-                <Sparkles className="w-5 h-5 text-amber-500" />
-              </div>
-              <h3 className="text-3xl font-black text-emerald-600 mt-2">{trafficMetrics.conversionRatePercent}%</h3>
-              <p className="text-xs text-emerald-600 font-semibold mt-1">Porcentaje de usuarios que visitó el local</p>
-            </CardContent>
-          </Card>
-        </div>
 
         {/* Section 3: Incorporated Stores and Addresses (Tiendas Incorporadas y Dirección) */}
         <Card className="border border-slate-200 shadow-sm bg-white rounded-3xl">
