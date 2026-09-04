@@ -25,11 +25,29 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar">
-      <div className="p-6 flex items-center gap-3 border-b border-sidebar-border">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-emerald-500 flex items-center justify-center text-white font-bold text-xl shadow-md">
-          $
+      <div className="p-6 flex items-center justify-between border-b border-sidebar-border">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-emerald-500 flex items-center justify-center text-white font-bold text-xl shadow-md">
+            $
+          </div>
+          <span className="font-bold text-xl text-sidebar-foreground tracking-tight">Liora</span>
         </div>
-        <span className="font-bold text-xl text-sidebar-foreground tracking-tight">Liora</span>
+      </div>
+
+      {/* User Profile Header */}
+      <div className="px-6 py-3 border-b border-sidebar-border/60 flex items-center justify-between bg-muted/30">
+        <div className="flex items-center gap-2.5 overflow-hidden">
+          <div className="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shrink-0 shadow-sm">
+            IS
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="text-xs font-bold text-sidebar-foreground truncate">Ismael Segovia</span>
+            <span className="text-[10px] text-muted-foreground truncate">Usuario Activo</span>
+          </div>
+        </div>
+        <Link href="/login" title="Cerrar Sesión / Cambiar Cuenta" className="text-xs text-slate-400 hover:text-red-500 font-semibold transition-colors">
+          Salir
+        </Link>
       </div>
       <SidebarContent className="pt-4">
         <SidebarGroup>

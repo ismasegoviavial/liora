@@ -26,6 +26,22 @@ export function B2bSidebar() {
           </div>
         </div>
 
+        {/* User Profile Badge */}
+        <div className="mx-1 px-3 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shrink-0">
+              IS
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-xs font-bold text-white truncate">Ismael Segovia</span>
+              <span className="text-[10px] text-emerald-400 font-medium truncate">Cuenta Empresa</span>
+            </div>
+          </div>
+          <Link href="/login" className="text-[11px] text-slate-400 hover:text-red-400 font-bold transition-colors">
+            Salir
+          </Link>
+        </div>
+
         {/* Navigation Items */}
         <nav className="space-y-1">
           {menuItems.map((item) => {
