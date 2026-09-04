@@ -17,18 +17,37 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false)
   const [accountType, setAccountType] = useState<"personal" | "business">("personal")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState("")
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError("")
 
-    setTimeout(() => {
-      setLoading(false)
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, accountType })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setError(data.error || "Error al crear la cuenta")
+        setLoading(false)
+        return
+      }
+
       if (accountType === "business") {
         router.push("/empresas/dashboard")
       } else {
         router.push("/dashboard")
       }
-    }, 600)
+    } catch (err) {
+      setError("Error de conexión al servidor")
+      setLoading(false)
+    }
   }
 
   return (
