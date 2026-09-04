@@ -17,8 +17,6 @@ const items = [
   { title: "Presupuesto", url: "/budget", icon: PiggyBank },
   { title: "Metas de Ahorro", url: "/goals", icon: Landmark },
   {title: "Deudas", url: "/debts", icon: CreditCard },
-  {title: "Patrimonio", url: "/net-worth", icon: LineChart },
-  {title: "Promociones", url: "/deals", icon: MapPin },
   { title: "Asesor IA", url: "/advisor", icon: MessageSquare, isPremium: true },
   { title: "Cuentas Bancarias", url: "/accounts", icon: Landmark },
   { title: "Configuración", url: "/settings", icon: Settings },
